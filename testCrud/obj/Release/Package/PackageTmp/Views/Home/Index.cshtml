@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" style="margin-top:30px">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Lista de clientes</h4>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-success" id="btn_add_customer">Crear Nuevo</a>
+                <hr />
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tableCustomers">
+                        <thead>
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Dirección </th>
+                                <th style="width:150px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (testCrud.Models.Customer item in Model)
+                            {
+                                <tr>
+                                    <td>@item.firstname</td>
+                                    <td>@item.lastname</td>
+                                    <td>@item.email</td>
+                                    <td>@item.phone</td>
+                                    <td>@item.address</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" onclick="editCustomer(@item.id)">Editar</a>
+                                        <a class="btn btn-danger btn-sm" onclick="launchConfirmation(@item.id,'@item.firstname @item.lastname')">Eliminar</a>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal confirmacion-->
+<div class="modal fade" id="ModalConfirmation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <input type="hidden" id="idClienteEliminar">
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar el cliente <strong id="nameCustomerModal"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" id="btn_delete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ABM-->
+<div class="modal fade" id="ModalABM" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalABMLabel">Agregar cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    Los campos con (*), indican que son de tipo obligatorios.
+                </div>
+                <div class="col-md-12 form-group">
+                    <label>Nombre(*)</label>
+                    <input class="form-control" id="inputNombre" name="firstname" value="" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label>Apellido(*)</label>
+                    <input class="form-control" id="inputApellido" name="lastname" value="" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label>Correo(*)</label>
+                    <input class="form-control" id="inputEmail" name="email" value="" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label>Telefono</label>
+                    <input class="form-control" id="inputTelefono" name="phone" value="" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label>Direccción</label>
+                    <input class="form-control" id="inputDireccion" name="address" value="" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btn_save">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<!--Sweetalert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--Mi script-->
+<script src="~/Scripts/app.js"></script>
